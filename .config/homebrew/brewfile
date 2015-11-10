@@ -1,0 +1,111 @@
+
+# tap repositories and their packages
+
+## caskroom/cask
+tap caskroom/cask
+brew brew-cask
+cask cord
+cask firefox
+cask google-chrome
+cask hammerspoon
+cask java
+cask kaleidoscope
+cask karabiner
+cask lastpass
+cask launchrocket
+cask path-finder
+cask qbittorrent
+cask razer-synapse
+cask seil
+cask spotify
+cask sqlitestudio
+cask vlc
+cask vmware-fusion
+
+## caskroom/fonts
+tap caskroom/fonts
+cask font-ubuntu-mono-powerline
+
+## caskroom/versions
+tap caskroom/versions
+cask iterm2-nightly
+cask sublime-text3
+
+## homebrew/dupes
+tap homebrew/dupes
+brew awk
+brew grep --with-default-names
+brew gzip
+brew less
+
+## homebrew/versions
+tap homebrew/versions
+
+## rcmdnk/file
+tap rcmdnk/file
+brew brew-file
+
+# Other Homebrew packages
+brew aria2
+brew browser
+brew cmake
+brew coreutils
+brew cowsay
+brew ctags
+brew ffmpeg
+brew fortune
+brew gdbm
+brew git
+brew git-extras
+brew gmp
+brew gnu-sed --with-default-names
+brew gnu-tar --with-default-names
+brew go
+brew lame
+brew lesspipe
+brew libevent
+brew libvo-aacenc
+brew libyaml
+brew lua
+brew nmap
+brew node
+brew openssl
+brew osxutils
+brew pandoc
+brew pass
+brew pcre
+brew pgcli
+brew ponysay
+brew postgresql
+brew python
+brew python3
+brew readline
+brew ruby
+brew shellcheck
+brew shocco
+brew sqlite
+brew ssh-copy-id
+brew the_silver_searcher
+brew tmux
+brew tree
+brew urlview
+brew vcsh
+brew vim --override-system-vi --with-lua
+brew wget
+brew x264
+brew xvid
+brew xz
+brew youtube-dl
+brew zsh
+
+# Cask applications
+cask --appdir=/Applications
+
+# App Store applications
+appstore Blackmagic Disk Speed Test
+appstore Downcast
+appstore DreamShot
+appstore Growl
+appstore ReadKit
+appstore ScreenDimmer
+appstore Xcode
