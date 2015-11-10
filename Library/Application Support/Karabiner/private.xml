@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<root>
+	<item>
+		<name>F19 to cmd+opt+ctrl (modifiers) / esc (no modifiers)</name>
+		<appendix>Map F19 (Key Code 80) to cmd+opt+ctrl (when used with modifiers). Send 'esc' without modifiers.</appendix>
+		<identifier>private.f19_esc</identifier>
+		<autogen>
+			--KeyOverlaidModifier--
+			KeyCode::F19,
+			KeyCode::COMMAND_L,
+			ModifierFlag::OPTION_L | ModifierFlag::CONTROL_L,
+			KeyCode::ESCAPE
+		</autogen>
+	</item>
+</root>
