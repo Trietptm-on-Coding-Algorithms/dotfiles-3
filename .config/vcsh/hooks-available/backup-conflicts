@@ -1,64 +1,73 @@
 #!/usr/bin/env bash
-# Author: Nathan Farrar
-# Email: nfarrar@crunk.io
-# Website: https://crunk.io/
-# Description: Prevents vcsh from failing when file conflicts exist.
-# Notes:
-# - Compatible with branches.
-# - $VCSH_REPO_NAME is populated by the vcsh script.
-# - If `post-delete` vcsh hook is added, this can be used in conjunction with
-#   a post-delete hook to restore system to original state when deleting
-#   repositories.
-# - Verbose & debug flags are currently hardcoded. Pending request to expose
-#   these from vcsh to hook environment, so these can be determined at runtime,
-#   rather than changing them in this config.
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: graceful vcsh merge hook {{{
+# 
+#   Prevents vcsh from failing when file conflicts exist.
+# 
+#   - Compatible with branches.
+#   - $VCSH_REPO_NAME is populated by the vcsh script.
+#   - If `post-delete` vcsh hook is added, this can be used in conjunction with
+#     a post-delete hook to restore system to original state when deleting
+#     repositories.
+#   - Verbose & debug flags are currently hardcoded. Pending request to expose
+#     these from vcsh to hook environment, so these can be determined at
+#     runtime, rather than changing them in this config.
+#
+# }}}
 
 
-# Configuration.
-HOOK_VERBOSE_MSGS=1
-HOOK_DEBUG=0
-HOOK_DEBUG_FILE='/tmp/vcsh-hook-debug.log'
-HOOK_BACKUP_ROOT_PATH="$HOME/.cache/vcsh/backup"
+# bash 'strict' execution
+set -euo pipefail
+IFS=$'\n'
 
-# Echo verbose output only if $HOOK_VERBOSE_MSGS is set to 1.
-# NOTE: The flag is currently hardcoded. If VCSH exposes --verbose to the
-# hook, this can be set automatically.
-verbose() {
+# constants
+HOOK_PATH="${BASH_SOURCE[${#BASH_SOURCE[@]} - 1]}"
+HOOK_NAME="${HOOK_PATH##*/}"
+HOOK_BRANCH="$(git symbolic-ref --short HEAD)"
+
+# settings
+HOOK_VERBOSE=1
+HOOK_LOG_FILE="/tmp/${HOOK_NAME}.log"
+HOOK_MSG_COLOR="\x1b[2;37m"
+HOOK_MSG_RESET="\x1b[0m"
+HOOK_BACKUP_ROOT="$HOME/.cache/vcsh/backup"
+
+debug() {
   [[ -z $1 ]] && return 1
-  [[ $HOOK_VERBOSE_MSGS -eq 0 ]] && return 0
-  echo -e "\x1b[32mHOOK:\t$1\x1b[0m"
+  lines=($1)
+  for line in "${lines[@]}"; do
+    printf "%s\n" "$line" >> "$HOOK_LOG_FILE"
+    if [[ $HOOK_VERBOSE -eq 1 ]]; then
+      printf "${HOOK_MSG_COLOR}  %s${HOOK_MSG_RESET}\n" "$line" >&2
+    fi
+  done
 }
 
-verbose 'Executing backup-file-conflicts hook.'
-verbose "Any conflicting files will be moved to $HOOK_BACKUP_ROOT_PATH."
+debug "-----------------------------------------------------------------"
+debug "START:       $(date)"
+debug "HOOK_NAME:   $HOOK_NAME"
+debug "BRANCH_NAME: $HOOK_BRANCH"
+debug "-----------------------------------------------------------------"
 
-if [[ $HOOK_DEBUG -eq 1 ]]; then
-  verbose "Writing debug output to $HOOK_DEBUG_FILE."
-  date >> "$HOOK_DEBUG_FILE"
-  printenv >> "$HOOK_DEBUG_FILE"
-  echo -e "\n" >> "$HOOK_DEBUG_FILE"
-fi
-
-# Parse objects from the git worktree. $object is a path, relative to $HOME.
-for object in $(git ls-tree -r "origin/$VCSH_REPO_NAME" | awk '{print $4}'); do
+# parse git objects
+for object in $(git ls-tree -r "origin/$HOOK_BRANCH" | cut -f2); do
   if test -e "$object"; then
-    # Calculate the full path where the backed-up file should be moved. This
-    # is the combination of the backup directory and the original files 
-    # relative path from $HOME, i.e. '~/.config/vim/vimrc' would be moved to
-    #  ~/.cache/vcsh/backup/.config/vim/vimrc.
-    file_src_path="$HOME/$object"
-    file_dst_path="$HOOK_BACKUP_ROOT_PATH/$object"
-    file_dst_dir="$(dirname $file_dst_path)"
+    debug "file conflict: ${object##*/}"
 
-    # If the target directory doesn't already exist, create it.
-    if [[ ! -d "$file_dst_dir" ]]; then
-      verbose "Creating directory $file_dst_dir"
-      mkdir -p "$file_dst_dir"
+    # compare object path to $HOME relative path for conflicts
+    # move any conflicts into the backup directory
+    srcfile="$HOME/$object"
+    dstfile="$HOOK_BACKUP_ROOT/$object"
+    dstdir="$(dirname "$dstfile")"
+
+    # create directories as necessary
+    if [[ ! -d "$dstdir" ]]; then
+      debug "mkdir ~/${dstdir#$HOME/}"
+      mkdir -p "$dstdir"
     fi
 
-    # Move the original file to the backup directory.
-    verbose "Moving file $file_src_path to $file_dst_path."
-    mv "$file_src_path" "$file_dst_path"
+    # move the conflicting file
+    debug "mv: ~/${srcfile#$HOME/} to ~/${dstfile#$HOME/}"
+    mv "$srcfile" "$dstfile"
   fi
-
 done
