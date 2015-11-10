@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# AUTHOR: Nathan Farrar <nfarrar@crunk.io>
+# WEBSITE: https://crunk.io
+# DESCRIPTION: Configure default sparse-checkout behavior for vcsh 
+#              repositories.
+#              $GIT_DIR is populated by VCSH and points to the repositories
+#              '.git' directory.
+#              $VCSH_REPO_NAME is populated by VCSH.
+
+
+# CONFIGURATION
+HOOK_VERBOSE_MSGS=1
+HOOK_DEBUG=0
+HOOK_DEBUG_FILE='/tmp/vcsh-hook-debug.log'
+HOOK_SPARSECHECKOUT_PATH="$GIT_DIR/info/sparse-checkout"
+HOOK_IGNORE_PATTERNS=(
+  '*'
+  !.gitignore
+  !.travis.yml
+  !LICENSE*
+  !README*
+  !Vagrantfile
+  !docs/**
+)
+
+# Echo verbose output only if $HOOK_VERBOSE_MSGS is set to 1.
+# NOTE: The flag is currently hardcoded. If VCSH exposes --verbose to the
+# hook, this can be set automatically.
+verbose() {
+  [[ -z ${1:-} ]] && return 1
+  [[ $HOOK_VERBOSE_MSGS -eq 0 ]] && return 0
+  echo -e "\x1b[32mHOOK:\t$1\x1b[0m"
+}
+
+verbose 'Executing sparse-checkout hook.'
+
+if [[ $HOOK_DEBUG -eq 1 ]]; then
+  verbose "Writing debug output to $HOOK_DEBUG_FILE."
+  date >> "$HOOK_DEBUG_FILE"
+  printenv >> "$HOOK_DEBUG_FILE"
+  echo -e "\n" >> "$HOOK_DEBUG_FILE"
+fi
+
+# Configure repository for sparse checkout (if not already done).
+if [[ "$(git config core.sparseCheckout)" == "true" ]]; then
+  verbose "$VCSH_REPO_NAME is already configured for sparse checkout."
+else
+  verbose "Configuring $VCSH_REPO_NAME for sparse checkout."
+  git config core.sparseCheckout true
+fi
+
+# Create a sparse-checkout file if it doesn't exist, and add default ignore
+# patterns.
+if [[ ! -f "$HOOK_SPARSECHECKOUT_PATH" ]]; then
+  verbose "Creating file $HOOK_SPARSECHECKOUT_PATH with defaults."
+  touch "$HOOK_SPARSECHECKOUT_PATH"
+
+  # Write default file list to $GIT_SPARSE_FILE.
+  verbose "Writing default ignore patterns to $HOOK_SPARSECHECKOUT_PATH."
+  for pattern in "${HOOK_IGNORE_PATTERNS[@]}"; do
+    echo "$pattern" >> "$HOOK_SPARSECHECKOUT_PATH"
+  done
+fi
+
+
