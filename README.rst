@@ -17,7 +17,32 @@
                                          48                                             
                                          '8                                             
 
+    “We become what we behold. We shape our tools, and thereafter our tools shape us.” 
+    ― Marshall McLuhan
+
+
 Installation
 ============
-Add docs.
 
+My dotfiles are stored in branches:
+
+- `dotfiles <http://git.io/v8y45>`_
+- `osx      <http://git.io/v8yBC>`_
+- ubuntu
+- cygwin
+
+The dotfiles branch is *required* - the os-specific branches are layered on top. They are managed
+with vcsh_.
+
+.. code-block:: bash
+
+    # clone the dotfiles branch & run the upgrade hooks
+    $ vcsh clone -b dotfiles https://github.com/nfarrar/dotfiles.git dotfiles
+    $ vcsh upgrade dotfiles
+
+    # clone an os-specific dotfiles branch
+    $ vcsh clone -b osx    https://github.com/nfarrar/dotfiles.git dotfiles-osx
+    $ vcsh clone -b ubuntu https://github.com/nfarrar/dotfiles.git dotfiles-ubuntu
+    $ vcsh clone -b cygwin https://github.com/nfarrar/dotfiles.git dotfiles-cygwin
+
+.. _vcsh: https://github.com/RichiH/vcsh
