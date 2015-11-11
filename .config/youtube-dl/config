@@ -1,5 +1,0 @@
-# Author: Nathan Farrar <nfarrar@crunk.io>
-# Description: youtube-dl configuration
-
---output 'Downloads/%(title)s-%(id)s.%(ext)s'
--f 18/22
