@@ -1,0 +1,14 @@
+CursorType=block
+Scrollbar=none
+Font=Ubuntu Mono for Powerline
+FontHeight=12
+RightClickAction=menu
+BoldAsFont=no
+Transparency=medium
+FontSmoothing=full
+Locale=en_US
+Charset=UTF-8
+PgUpDnScroll=yes
+Term=xterm-256color
+CopyOnSelect=no
+CopyAsRTF=no
