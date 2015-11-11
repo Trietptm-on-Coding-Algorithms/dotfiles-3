@@ -1,0 +1,21 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: shell profile {{{
+# 
+#   My .profile configuration file contains sh-compatible environment
+#   configuration directives. The topic-specific configuration
+#   directives are organized into files stored in $XDG_CONFIG_HOME/sh/env.d.
+#
+#   Bookmarks:
+#
+#   -  http://chr4.org/blog/2014/09/10/conf-dot-d-like-directories-for-zsh-slash-bash-dotfiles/
+#   - https://github.com/chr4/shellrc/
+#
+# }}}
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+if [[ -d "$XDG_CONFIG_HOME/sh/profile.d" ]]; then
+  for cfg in $XDG_CONFIG_HOME/sh/profile.d/*.sh; do
+    source "$cfg"
+  done
+fi

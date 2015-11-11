@@ -1,5 +1,9 @@
 *
 !/.config
+!/.config/sh
+!/.config/sh/profile
+!/.config/sh/profile.d
+!/.config/sh/profile.d/00-xdg.sh
 !/.config/vcsh
 !/.config/vcsh/hooks-available
 !/.config/vcsh/hooks-available/backup-conflicts
@@ -12,4 +16,5 @@
 !/.config/youtube-dl/bin
 !/.config/youtube-dl/bin/postconvert
 !/.config/youtube-dl/config
-!/README.rst
+!/.gitignore.d
+!/.gitignore.d/dotfiles
