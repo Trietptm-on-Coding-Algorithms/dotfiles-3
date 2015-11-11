@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: graceful vcsh merge hook {{{
+# 
+#   Prevents vcsh from failing when file conflicts exist.
+# 
+#   - Compatible with branches.
+#   - $VCSH_REPO_NAME is populated by the vcsh script.
+#   - If `post-delete` vcsh hook is added, this can be used in conjunction with
+#     a post-delete hook to restore system to original state when deleting
+#     repositories.
+#   - Verbose & debug flags are currently hardcoded. Pending request to expose
+#     these from vcsh to hook environment, so these can be determined at
+#     runtime, rather than changing them in this config.
+#
+# }}}
+
+
+# bash 'strict' execution
+set -euo pipefail
+IFS=$'\n'
+
+# constants
+HOOK_PATH="${BASH_SOURCE[${#BASH_SOURCE[@]} - 1]}"
+HOOK_NAME="${HOOK_PATH##*/}"
+HOOK_BRANCH="$(git symbolic-ref --short HEAD)"
+
+# settings
+HOOK_VERBOSE=1
+HOOK_LOG_FILE="/tmp/${HOOK_NAME}.log"
+HOOK_MSG_COLOR="\x1b[2;37m"
+HOOK_MSG_RESET="\x1b[0m"
+HOOK_BACKUP_ROOT="$HOME/.cache/vcsh/backup"
+
+debug() {
+  [[ -z $1 ]] && return 1
+  lines=($1)
+  for line in "${lines[@]}"; do
+    printf "%s\n" "$line" >> "$HOOK_LOG_FILE"
+    if [[ $HOOK_VERBOSE -eq 1 ]]; then
+      printf "${HOOK_MSG_COLOR}  %s${HOOK_MSG_RESET}\n" "$line" >&2
+    fi
+  done
+}
+
+debug "-----------------------------------------------------------------"
+debug "START:       $(date)"
+debug "HOOK_NAME:   $HOOK_NAME"
+debug "BRANCH_NAME: $HOOK_BRANCH"
+debug "-----------------------------------------------------------------"
+
+# parse git objects
+for object in $(git ls-tree -r "origin/$HOOK_BRANCH" | cut -f2); do
+  if test -e "$object"; then
+    debug "file conflict: ${object##*/}"
+
+    # compare object path to $HOME relative path for conflicts
+    # move any conflicts into the backup directory
+    srcfile="$HOME/$object"
+    dstfile="$HOOK_BACKUP_ROOT/$object"
+    dstdir="$(dirname "$dstfile")"
+
+    # create directories as necessary
+    if [[ ! -d "$dstdir" ]]; then
+      debug "mkdir ~/${dstdir#$HOME/}"
+      mkdir -p "$dstdir"
+    fi
+
+    # move the conflicting file
+    debug "mv: ~/${srcfile#$HOME/} to ~/${dstfile#$HOME/}"
+    mv "$srcfile" "$dstfile"
+  fi
+done
