@@ -1,0 +1,9 @@
+*
+!/.config
+!/.config/homebrew
+!/.config/homebrew/brewfile
+!/Library
+!/Library/Application Support
+!/Library/Application Support/Karabiner
+!/Library/Application Support/Karabiner/private.xml
+!/README.rst
