@@ -24,15 +24,15 @@
 Installation
 ============
 
-My dotfiles are stored in branches:
+My dotfiles are stored in *orphaned* branches:
 
 - `dotfiles <http://git.io/v8y45>`_
 - `osx      <http://git.io/v8yBC>`_
-- ubuntu
-- cygwin
+- `ubuntu   <https://github.com/nfarrar/dotfiles/tree/ubuntu>`_
+- `cygwin   <https://github.com/nfarrar/dotfiles/tree/cygwin>`_
 
-The dotfiles branch is *required* - the os-specific branches are layered on top. They are managed
-with vcsh_.
+The repos are intended to be managed with vcsh_.  The dotfiles branch is
+*required* and the os-specific branches are layered on top of it.
 
 .. code-block:: bash
 
