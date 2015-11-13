@@ -55,6 +55,8 @@ brew ctags
 brew ffmpeg
 brew figlet
 brew fortune
+brew gawk
+brew gcc
 brew gdbm
 brew git
 brew git-extras
