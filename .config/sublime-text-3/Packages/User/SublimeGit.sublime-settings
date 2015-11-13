@@ -1,0 +1,4 @@
+{
+    "git_executables": { "git": ["/usr/local/bin/git"], },
+    "git_extensions": { "git_flow": false, "legit": false },
+}

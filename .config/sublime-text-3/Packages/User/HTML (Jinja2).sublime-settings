@@ -1,0 +1,10 @@
+{
+  "extensions": ["html"],
+
+  // whitespace
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+
+  // wrapping
+  "word_wrap": false
+}

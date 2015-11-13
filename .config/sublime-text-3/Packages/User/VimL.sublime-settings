@@ -1,0 +1,16 @@
+{
+	"WrapPlus.wrap_width": 79,
+	"auto_complete": false,
+	"extensions":
+	[
+		".vintageousrc"
+	],
+	"rulers":
+	[
+		79
+	],
+	"sublimelinter": false,
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true,
+	"word_wrap": true
+}

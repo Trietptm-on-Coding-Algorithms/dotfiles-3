@@ -1,0 +1,17 @@
+{
+  // extensions
+  "extensions": ["json", "sublime-settings"],
+
+  // whitespace
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+
+  // wrapping
+  "word_wrap": false,
+
+  // completion
+  "auto_complete": false,
+
+  // linting
+  "sublimelinter": true,
+}

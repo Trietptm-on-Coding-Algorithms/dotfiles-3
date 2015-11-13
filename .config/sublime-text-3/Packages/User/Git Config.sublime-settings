@@ -1,0 +1,17 @@
+{
+
+  "extensions": ["gc"],
+
+  // whitespace
+  "tab_size": 4,
+  "rulers": [ 78 ],
+
+  // wrapping
+  "word_wrap": false,
+  "wrap_width": 0,
+  "WrapPlus.wrap_width": 78,
+  "WrapPlus.break_long_words": true,
+  "WrapPlus.break_on_hyphens": false,
+  "WrapPlus.include_line_endings": false,
+
+}
