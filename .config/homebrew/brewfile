@@ -53,6 +53,7 @@ brew coreutils
 brew cowsay
 brew ctags
 brew ffmpeg
+brew figlet
 brew fortune
 brew gdbm
 brew git

@@ -1,6 +1,0 @@
-# Author: Nathan Farrar <nfarrar@crunk.io>
-# Description: osx credential helper
-
-[credential]
-
-	helper = osxkeychain

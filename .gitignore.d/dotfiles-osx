@@ -1,5 +1,9 @@
 *
 !/.config
+!/.config/git
+!/.config/git/config.osx.gc
+!/.config/hammerspoon
+!/.config/hammerspoon/init.lua
 !/.config/homebrew
 !/.config/homebrew/brewfile
 !/.gitignore.d
