@@ -3,18 +3,16 @@
 !/.config/git
 !/.config/git/config.osx.gc
 !/.config/hammerspoon
+!/.config/hammerspoon/console.lua
+!/.config/hammerspoon/grid.lua
 !/.config/hammerspoon/init.lua
+!/.config/hammerspoon/wm.lua
 !/.config/homebrew
 !/.config/homebrew/brewfile
+!/.config/iterm
+!/.config/iterm/com.googlecode.iterm2.plist
 !/.gitignore.d
 !/.gitignore.d/dotfiles-osx
-!/Documents
-!/Documents/Projects
-!/Documents/Projects/dotfiles
-!/Documents/Projects/dotfiles/.config
-!/Documents/Projects/dotfiles/.config/git
-!/Documents/Projects/dotfiles/.config/git/helper
-!/Documents/Projects/dotfiles/.config/git/kaleidoscope
 !/Library
 !/Library/Application Support
 !/Library/Application Support/Karabiner
