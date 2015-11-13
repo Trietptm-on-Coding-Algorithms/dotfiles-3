@@ -1,0 +1,43 @@
+# Author:      Nathan Farrar <nfarrar@crunk.io>
+# Description: modular git config {{{
+#
+#   This is my *modular* git configuration.
+#
+#   - My config 'defaults' are set in 'rc.d/<section>.gc'.
+#   - Optional configuration are set in 'opt.d/<topic>.gc'.
+#   - OS-specific configuration is set in 'config.<os>.gc'.
+#   
+#   - Note: The '.gc' suffix makes it easy to enable syntax highlighting.
+#
+#   - https://git-scm.com/docs/git-config
+#   - https://git-scm.com/docs/diff-config
+#   - http://dropshado.ws/post/7844857440/gitconfig-colors
+#   - http://cheat.errtheblog.com/s/git
+#
+# }}}
+
+
+[include]
+
+	# defaults
+	path = ~/.config/git/rc.d/alias.gc
+	path = ~/.config/git/rc.d/branch.gc
+	path = ~/.config/git/rc.d/color.gc
+	path = ~/.config/git/rc.d/core.gc
+	path = ~/.config/git/rc.d/diff.gc
+	path = ~/.config/git/rc.d/grep.gc
+	path = ~/.config/git/rc.d/merge.gc
+	path = ~/.config/git/rc.d/push.gc
+	path = ~/.config/git/rc.d/rerere.gc
+	path = ~/.config/git/rc.d/status.gc
+
+	# os-specific
+	path = ~/.config/git/config.osx.gc
+	path = ~/.config/git/config.ubuntu.gc
+	path = ~/.config/git/config.cygwin.gc
+
+	# user
+	path = ~/.config/git/config.user.gc
+
+	# overrides
+	path = ~/.config/git/config.local.gc

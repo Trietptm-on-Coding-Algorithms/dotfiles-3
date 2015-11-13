@@ -1,0 +1,54 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: color config {{{
+#
+#    - https://nathanhoad.net/how-to-colours-in-git
+#
+# }}}
+
+
+[color]
+
+	# Enable colors in git output. There are three possible settings: false
+	# (default), true (always insert color control sequences), and auto
+	# (only insert color control sequences when output is sent to a tty).
+	# Note: Pager defaults to 'true' and does not support 'auto'.
+	branch = auto
+	diff = auto
+	grep = auto
+	interactive = auto
+	status = auto
+	ui = auto
+
+	; [color "diff"]
+	; 	plain = normal
+	; 	meta = bold
+	; 	frag = cyan
+	; 	old = red
+	; 	new = green
+	; 	commit = yellow
+	; 	whitespace = normal red
+	; [color "branch"]
+	; 	current = green
+	; 	local = normal
+	; 	remote = red
+	; 	plain = normal
+	; [color "status"]
+	; 	header = normal
+	; 	added = red
+	; 	updated = green
+	; 	changed = red
+	; 	untracked = red
+	; 	nobranch = red
+	; [color "grep"]
+	; 	match = normal
+	; [color "interactive"]
+	; 	prompt = normal
+	; 	header = normal
+	; 	help = normal
+	; 	error = normal
+
+# [color "status"]
+
+	# added = green
+	# changed = yellow
+	# untracked = red

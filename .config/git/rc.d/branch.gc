@@ -1,0 +1,28 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: branch config {{{
+# 
+#
+# }}}
+
+
+[branch]
+
+	# When creating new branches, tracking is not setup by default. The
+	# autosetupmerge option will automatically pass the --track flag to git
+	# branch and git checkout -b.
+
+	autosetupmerge = always
+
+	# When using git pull, use --rebase, instead of the default 'merge'
+	# behavior. This avoids creating 'merge bubbles' in the commit history
+	# by fast-forwarding your local branch to the most recent commit from
+	# the *tracked* branch and applying them on-top, rather than the point
+	# at which your local-branch diverged.
+	# Note: This sets up *new* branches for rebasing
+	# See also:
+	#  https://git-scm.com/book/en/v2/Git-Branching-Rebasing
+	#  https://www.atlassian.com/git/tutorials/merging-vs-rebasing/the-golden-rule-of-rebasing
+	#  http://nathanleclaire.com/blog/2014/09/14/dont-be-scared-of-git-rebase/
+	#  http://www.randyfay.com/node/103
+
+	autosetuprebase = always

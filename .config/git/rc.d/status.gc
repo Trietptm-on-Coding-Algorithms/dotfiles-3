@@ -1,0 +1,12 @@
+# Author:      Nathan Farrar <nfarrar@crunk.io>
+# Description: modular git config {{{
+#
+#
+#
+# }}}
+
+
+[status]
+
+	relativePaths = true
+	# showUntrackedFiles = no

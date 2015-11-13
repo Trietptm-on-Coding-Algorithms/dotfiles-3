@@ -1,0 +1,183 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: aliases configs (disabled) {{{
+#
+#   Bookmarks:
+#
+#   - http://www.commandlinefu.com/commands/matching/git/Z2l0/sort-by-votes
+#   - http://www.commandlinefu.com/commands/matching/gitignore/Z2l0aWdub3Jl/sort-by-votes
+#   - http://lukas.zapletalovi.com/2012/07/my-git-aliases-again.html
+#   - https://stackoverflow.com/questions/3321492/git-alias-with-positional-parameters
+# 
+# }}}
+
+
+[alias]
+
+    # files = "!f() { git diff --name-status $1^ $1; }; f"
+    # count = "!history|grep git| awk '{CMD[$3]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v \"./\" | column -c3 -s " " -t | sort -nr | nl |  head -n10"
+    # count = \'history|grep git| awk '{CMD[$3]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v \"./\" | column -c3 -s " " -t | sort -nr | nl |  head -n10\'
+
+
+    # Rebase commits from remote, remove remote-tracking branches that no longer exist,
+    # fast-forward local changes & update any submodules.
+    update = !git pull --rebase --prune $@ && git submodule update --init --recursive
+
+    # interactive rebase
+    ir = !sh -c 'git rebase -i origin/${1-master}' -
+
+    # stash
+    sa = stash apply
+    sc = stash clear
+    sd = stash drop
+    sl = stash list
+    sp = stash pop
+    ss = stash save
+    sw = stash show
+
+    cob = checkout -b
+
+    # add
+    a = add .
+    ai = add -i
+
+    # Add & commit file (git ac -m 'message')
+    # Usage: 
+    ac = '!git add -A && git commit'
+
+    # logs
+    l = log --oneline
+    lg = log --oneline --graph --decorate
+    lgs = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    lgg = log --graph --pretty=format:'%C(yellow)%h%C(auto)%d%Creset %s %C(white)- %an, %ar%Creset'
+
+    # diffs
+    d = diff
+    dc = diff --cached
+    dl = difftool
+    dlc = difftool --cached
+    dk = diff --check
+    dp = diff --patience
+    dck = diff --cached --check
+
+    # submodules
+    fetchall = fetch --recurse-submodules=on-demand
+    pushall = push --recurse-submodules=on-demand
+    statusall = status --recurse-submodules=on-demand
+
+
+    # branch
+    bl  = branch -vv
+    blr = branch -rvv
+    bla = branch -avv
+    bd  = branch -d
+
+    # fetch
+    f = fetch
+    fo = fetch origin
+
+    # merge
+    m = merge
+    ma = merge --abort
+    mc = merge --continue
+    ms = merge --skip
+
+    # prune
+    pr = prune -v
+
+    # push
+    ps = push
+    psf = push -f
+    psu = push -u
+    pso = push origin
+    psfo = push -f origin
+    psuo = push -u origin
+    psom = push origin master
+
+    # pull
+    pl = pull
+    plu = pull -u
+    plo = pull origin
+    plp = pull upstream
+    plom = pull origin master
+    plpm = pull upstream master
+
+    # pull & rebase
+    pb = pull --rebase
+    pbo = pull --rebase origin
+    pbp = pull --rebase upstream
+    pbom = pull --rebase origin master
+    pbpm = pull --rebase upstream master
+
+    # rebase 
+    rb = rebase
+    rba = rebase --abort
+    rbc = rebase --continue
+    rbi = rebase --interactive
+    rbs = rebase --skip
+
+    # reset
+    re = reset
+    rh = reset HEAD
+    reh = reset --hard
+    rem = reset --mixed
+    res = reset --soft
+    rehh = reset --hard HEAD
+    remh = reset --mixed HEAD
+    resh = reset --soft HEAD
+
+    # remotes
+    r = remote
+    ra = remote add
+    rr = remote rm
+    rv = remote -v
+    rp = remote prune
+    rs = remote show
+    rso = remote show origin
+    rpo = remote prune origin
+
+    # show
+    w = show
+    wp = show -p
+    wr = show -p --no-color
+
+    # misc
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+
+    human = name-rev --name-only --refs=refs/heads/*
+
+    cm = !git add -A && git commit -m
+    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    wip = !git add -u && git commit -m "WIP" 
+    undo = reset HEAD~1 --mixed
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+
+
+    # http://benradler.com/blog/2014/09/15/awesome-git-configuration-shortcuts-and-aliases
+    # cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+    # git config --global alias.shove '!f() { H=$(git current-branch) && git push -u origin $H; }; f'
+
+
+    # Push current branch to upstream branch with the same name.
+    # pushup = "!gitbranchname() { git symbolic-ref --short HEAD; }; gitpushupstream() { git push --set-upstream origin `gitbranchname`; }; gitpushupstream"
+
+    # Open a pull request.
+    # alias gopr="open 'https://github.com/`git config --get remote.origin.url | awk -F':' '{ print $2 }' | awk -F'.' '{print $1}'`/compare/`git symbolic-ref --short -q HEAD`?expand=1'"
+
+    ci = commit
+    co = checkout
+    st = status -sb
+    lg = log --graph --pretty=format:'%C(yellow)%h%C(auto)%d%Creset %s %C(white)- %an, %ar%Creset'
+
+    # submodules
+    fetchall = fetch --recurse-submodules=on-demand
+    pushall = push --recurse-submodules=on-demand
+    statusall = status --recurse-submodules=on-demand
+
+    gl   = log -10 --color=always --all --graph --topo-order --pretty='format:%Cred%h%Creset %s %C(yellow)%d%Creset%n%C(cyan)(%cr by %cn)%Creset%n'
+    gll  = log --color=always --all --graph --topo-order --pretty='format:%Cred%h%Creset %s %C(yellow)%d%Creset%n%C(cyan)(%cr by %cn)%Creset%n'

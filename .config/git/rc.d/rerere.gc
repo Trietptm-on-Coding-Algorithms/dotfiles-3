@@ -1,0 +1,19 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: rerere config {{{
+#
+#    
+#
+# }}}
+
+
+[rerere]
+
+	# 'Reuse Recorded Resolution' automatically uses replays from previous
+	# merge & rebases to resolve subsequent conflicts.
+
+	enabled = true
+
+	# When rerere resolves a conflict, also let it update the index
+	# (auto-stage) the resolution.
+
+	autoupdate = true

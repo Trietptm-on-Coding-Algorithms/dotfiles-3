@@ -1,0 +1,46 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: core config {{{
+#
+#    - https://nathanhoad.net/how-to-colours-in-git
+#
+# }}}
+
+
+[core]
+
+	# By default git doesn't touch the line-endings of text files. This can
+	# be problematic when working with repositories on multiple platforms.
+	#
+	# Setting autocrlf tells git to replace all line-endings for text files
+	# in the working directory to CRLF but to keep them normalized with
+	# 'LF' in the object database. This is *typically* what you want on
+	# windows.  Setting autocrlf to input tells git *not* to convert the
+	# line-endings of text files to 'CRLF' in the working directory, but to
+	# ensure that all line-endings for text files in the object-database
+	# are 'LF'. 
+	#  - By default autoclrf is disabled.
+	#  - autoclrf causes git to ignore the 'core.eol' setting.
+	#  - 'Text' files are determined by 'gitattributes'.
+
+	autoclrf = input
+
+	# Default global 'exludes' file. These files should *never* be checked
+	# into any git repository.
+
+	excludesfile = ~/.config/git/ignore
+
+	# Always use vim as the git editor. This is primarly used for editing
+	# commit messages.
+	# editor = vim -pc ':normal gg'
+
+	editor = vim
+
+	# The pager is used when git displays *paged* output (i.e. from 'log'
+	# and 'diff'). By default this is set to 'less' (no options). I'm using
+	# with less with some additional flags:
+	#  -X: Do not clear the screen before displaying output.
+	#  -F: If less than a page of output is displayed, automatically exit.
+	#  -R: Display raw control characters, i.e. colors & formatting
+	#  -S: 'Chop' lines longer than the terminal width (default: fold).
+
+	pager = less -FRX

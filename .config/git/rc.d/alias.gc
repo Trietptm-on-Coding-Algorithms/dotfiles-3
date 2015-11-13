@@ -1,0 +1,132 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: alias config {{{
+#
+# }}}
+
+
+[alias]
+
+	# --- [ META ] ------------------------------------------------------------
+	# These aliases are useful for working with git internals & the
+	# configuration. They do not make any changes to git repos.
+
+	# Usage: git ec
+	#  Opens the git configuration file in $GIT_EDITOR.
+	ec = config --global --edit
+
+	# Usage: git la <pattern>
+	#  Displays an alias matching <pattern>.
+	la = "!f() { git config --get-regexp "^alias.${1}$" ; }; f"
+
+	# Usage: git laa
+	#  Lists all aliases.
+	laa = "!git config -l | grep alias | cut -c 7-"
+
+
+	# --- [ SPLUNKING ] -------------------------------------------------------
+	# Aliases used for displaying information (and investigating) a 
+	# repository.
+
+	# Usage: git s
+	#  Displays the repository status in short format, with branch info.
+	s = status -sb --untracked-files=all
+
+	# Usage: git b
+	#  Displays all branches (local & remote) with their tracking info.
+	b = branch -lavv
+
+	# Usage: git 
+	#  Display information about the origin repository (remote branches,
+	#  local branches setup for pull, local refs configured for push).
+	rso = remote show origin
+
+	# Shortcuts for displaying files.
+	lfs = ls-files --stage 			# staged files
+	lfu = ls-files --others 		# untracked files
+	lfd = ls-files --deleted	 	# deleted files
+	lfi = ls-files --ignored 		# ignored files
+
+	# Usage: git lsc
+	#  Displays a list of conflicting files.
+	lfc = "!git ls-files -u | awk '{print $4}' | sort -u"
+
+	# Usage: git lfp <pattern>
+	#  Displays the full path of files with names matching <pattern>.
+	lsp = !sh -c 'git ls-tree -r --name-only HEAD | grep --color $1' -
+
+	# Usage: git staged
+	#  Display differences between HEAD and the index.
+	staged = diff --cached
+
+
+	# 
+	dlc = diff --cached HEAD^
+
+	# --- [ UNDO ] ------------------------------------------------------------
+	# These aliases 'undo' changes to files the working directory.
+	 
+	# Usage: git undo
+	#  Moves HEAD back to the previous commit, but leaves the index and
+	#  working tree untouched.
+	undo = reset --soft HEAD^
+
+	# Usage: git pristine
+	#  Does a hard reset & removes all untracked, resetting the working
+	#  directory to a 'pristine' state.
+	pristine = !git reset --hard && git clean -fdx
+
+
+	# --- [ QUICKCOMMIT ] -----------------------------------------------------
+	# Aliases to quickly add & commit files.
+
+	# Usage: git qc <filename> [<commit message>]
+	# Add & commits an untracked file.
+	qc = "!f() { git add $1 && git commit $1 -m \"${2:-quickadd: $1}\" ; }; f"
+
+	# Usage: git qca [<commit message>]
+	# Add & commits all untracked files.
+	qca = "!f() { git add --all && git commit -am \"${1:-quickadd all files}\" ; }; f"
+
+
+	# --- [ RECOMMIT ] ---------------------------------------------------
+	# These aliases use commit's -ammend flag to modify the previous commit.
+	
+	# Usage: rci
+	# Amend previous commit with *all* additional changes. Reuse author & message.
+	rci = commit -C HEAD --amend
+
+	# Amend previous commit message.
+	rcm = commit -c HEAD --amend
+
+	# Amend previous comit author.
+	rca = commit -C HEAD --amend --reset-author
+
+	# Add all additional changes to the previous commit.
+	reci = commit --all --amend
+
+	# Remove new files with no associated commits from staging.
+	unstage = reset --mixed HEAD --
+
+	# --- [ SQUASH ] -----------------------------------------------------
+	
+	# Usage: sqp
+	#  Squash the last commit into the previous commit.
+	# sqp = "!sh git reset --soft "HEAD^" && git commit --amend
+
+	# --- [ BACKUP ] -----------------------------------------------------
+	# Backup the repository to a zip file.
+	 
+	# Usage: git backup
+	#  Builds & saves a zip-archived backup of the current branch.
+	# backup = "!git archive --format zip --output download_$(date +%d-%m-%Y-%H.%M).zip master"
+
+
+	# --- [ CHANGES ] ----------------------------------------------------
+	# Aliases for merging and rebasing changes.
+
+	ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+
+	co = checkout
+	ci = commit
+	br = branch

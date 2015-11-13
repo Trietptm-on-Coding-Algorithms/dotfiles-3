@@ -1,0 +1,25 @@
+# Author: Nathan Farrar <nfarrar@crunk.io>
+# Description: diff config {{{
+#
+# }}}
+
+
+[diff]
+
+	# 
+	# - https://git-scm.com/docs/diff-config
+
+	# Use vimdiff as the default diff tool.
+	tool = vimdiff
+
+	# Use mnemonic prefixes like 'i'ndex, 'w'ork tree, 'c'ommit and
+	# 'o'bject, rather than 'a' and 'b'
+
+	mnemonicprefix = true
+
+
+[difftool]
+
+	; Do *not* prompt before launching the diff tool.
+	; https://git-scm.com/docs/git-difftool
+	prompt = false
