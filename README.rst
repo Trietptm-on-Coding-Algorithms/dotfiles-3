@@ -45,4 +45,28 @@ The repos are intended to be managed with vcsh_.  The dotfiles branch is
     $ vcsh clone -b ubuntu https://github.com/nfarrar/dotfiles.git dotfiles-ubuntu
     $ vcsh clone -b cygwin https://github.com/nfarrar/dotfiles.git dotfiles-cygwin
 
+
+Additional Steps
+================
+
+After installing the repos with vcsh, the following commands are required to finish up the configuration (OSX):
+
+    # change hammerspoon configuration path
+    $ defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
+    # change iterm prefs path
+    $ defaults write com.googlecode.iterm2 PrefsCustomFolder -string "/Users/$USER/.config/iterm"
+    $ defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+
+    # enable capslock in seil
+    $ defaults write org.pqrs.Seil '{ "sysctl" = { "enable_capslock" = 1; "keycode_capslock" = 80; }; }'
+
+    # enable karabainer hyperlock
+    $ defaults write org.pqrs.Karabiner private.f19_esc -bool true
+
+
 .. _vcsh: https://github.com/RichiH/vcsh
+
+.. bookmarks:
+
+    - http://git.io/v4kLw
