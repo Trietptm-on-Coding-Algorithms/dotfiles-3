@@ -51,6 +51,8 @@ Additional Steps
 
 After installing the repos with vcsh, the following commands are required to finish up the configuration (OSX):
 
+..code-block:: bash
+
     # change hammerspoon configuration path
     $ defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
